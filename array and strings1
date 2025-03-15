@@ -1,0 +1,185 @@
+1. Contains Duplicate
+class Solution {
+public:
+    bool containsDuplicate(vector<int>& nums) {
+       
+       unordered_set<int>s;
+       for(int i :nums){
+        if(s.count(i)){
+            return true;
+        }
+        s.insert(i);
+       }
+       return false;
+        
+    }
+};
+
+2. Missing Number
+class Solution {
+  public:
+      int missingNumber(vector<int>& a) {
+      int n=a.size();
+         int xor1=0,xor2=0;
+         for(int i=0;i<n;i++){
+          xor2=xor2^a[i];
+          xor1=xor1^(i);
+         }
+         xor1=xor1^n;
+         return (xor1^xor2);
+  
+      }
+  };
+
+3. Numbers Disappeared in Array
+class Solution {
+  public:
+      vector<int> findDisappearedNumbers(vector<int>& nums) {
+          int n=nums.size();
+          vector<int>t;
+          for(int i:nums){
+              int ind=abs(i)-1;
+              nums[ind]=-abs(nums[ind]);
+          }
+          for(int i=0;i<n;i++){
+              if(nums[i]>0){
+                  t.push_back(i+1);
+              }
+          }
+          return t;
+         
+          
+      }
+  };
+
+4. Two Sum
+class Solution {
+  public:
+      vector<int> twoSum(vector<int>& a, int k) {
+        
+          int n=a.size();
+          for(int i=0;i<n-1;i++){
+              for(int j=i+1;j<n;j++){
+                  if(a[i]+a[j]==k){
+                      return {i,j};
+                  }
+              }
+          }
+          return {};
+          
+      }
+  };
+
+5. Numbers Smaller Than Current
+class Solution {
+  public:
+      vector<int> smallerNumbersThanCurrent(vector<int>& nums) {
+          int n=nums.size();
+          vector<int>t=nums;
+          sort(t.begin(),t.end());
+          unordered_map<int,int>mp;
+          for(int i=n-1;i>=0;i--){
+              mp[t[i]]=i;
+          }
+          for(int i=0;i<n;i++){
+              nums[i]=mp[nums[i]];
+          }
+          return nums;
+          
+      }
+  };
+
+6.Minimum Time Visiting All Points
+class Solution {
+  public:
+      int minTimeToVisitAllPoints(vector<vector<int>>& points) {
+          int n=points.size();
+          int cnt=0;
+          auto p1=points[0];
+          for(int i=1;i<n;i++){
+              auto p2=points[i];
+              int dx=p2[0]-p1[0];
+              int dy=p2[1]-p1[1];
+              cnt+=max(abs(dx),abs(dy));
+              p1=p2;
+          }
+          return cnt;
+          
+      }
+  };
+
+9. Best Time to Buy and Sell Stock
+class Solution {
+  public:
+      int maxProfit(vector<int>& prices) {
+          int n=prices.size();
+          int mp=0;
+          int bp=prices[0];
+          for(int i=1;i<n;i++)
+          {
+              int cp=prices[i]-bp;
+              if(cp>mp)
+              {
+                  mp=cp;
+              }
+              if(prices[i]<bp)
+              {
+                  bp=prices[i];
+              }
+          }
+        return mp;  
+      }
+  };
+
+10.Squares of a Sorted Array
+
+class Solution {
+  public:
+      vector<int> sortedSquares(vector<int>& nums) {
+            for(int i=0;i<nums.size();i++){
+              nums[i]*=nums[i];
+  
+          }
+          sort(nums.begin(),nums.end());
+          return nums;
+          
+      }
+          
+      
+  };
+11.3Sum
+class Solution {
+  public:
+      vector<vector<int>> threeSum(vector<int>& nums) {
+          vector<vector<int>>ans;
+          sort(nums.begin(),nums.end());
+          for(int i=0;i<nums.size();i++){
+              if(i>0 && nums[i]==nums[i-1]){
+                  continue;
+              }
+              int p1=i+1;
+              int p2=nums.size()-1;
+              while(p1<p2){
+                  int t=nums[i]+nums[p1]+nums[p2];
+                  if(t>0){
+                      p2--;
+                  }
+                  else if(t<0){
+                      p1++;
+                  }
+                  else{
+                      ans.push_back({nums[i],nums[p1],nums[p2]});
+                      p1++;
+                      while(nums[p1]==nums[p1-1] && p1<p2){
+                          p1++;
+                      }
+                  }
+              }
+  
+          }
+          return ans;
+  
+          
+      }
+  };
+12.Longest Mountain in Array
